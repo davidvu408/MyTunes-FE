@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+</head>
+<body>
+
+<h1>Login</h1>
+<button onclick="login()">Login</button>
+</body>
+
+<script>
+	function login() {
+		const url = ''
+		fetch('https://my-tunes-be.herokuapp.com/spotify-api/prompt-user')
+		.then((res) => res.text())
+		.then(function(res) {
+			window.location.href = res;
+		});
+	}
+</script>
+</html>
