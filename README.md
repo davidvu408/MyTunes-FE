@@ -1,2 +1,2 @@
 # MyTunes-FE
-MyTunes Front End
+Site currently published at: https://davidvu408.github.io/MyTunes-FE/
