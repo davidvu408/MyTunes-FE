@@ -11,9 +11,11 @@
 
 <script>
 	function login() {
+		// Generate URI endpoint where user can accept/decline Spotify authorization
 		fetch('https://my-tunes-be.herokuapp.com/spotify-api/prompt-user')
 		.then((res) => res.text())
 		.then(function(res) {
+			// Redirect to URI
 			window.location.href = res;
 		});
 	}

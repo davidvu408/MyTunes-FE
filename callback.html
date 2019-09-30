@@ -4,12 +4,29 @@
 	<title></title>
 </head>
 <body>
-<p id = "auth"></p>
 </body>
 
 <script>
 	const urlParams = new URLSearchParams(window.location.search);
-	const auth_token = urlParams.get('code');
-	document.getElementById('auth').innerHTML = 'Auth Code: ' + auth_token;
+	const auth_code = urlParams.get('code');
+	let redirectURL = 'index.html';
+	// If auth_code is in URL params
+	if(auth_code !== null) {
+		// Make a request for an Access Token and Refresh Token
+		fetch('https://my-tunes-be.herokuapp.com/spotify-api/access-token?auth_code=' + auth_code)
+		.then((res) => res.json())
+		.then((res) => {
+			if(!res.hasError) {
+				// Set the tokens in Local Storage
+				window.localStorage.setItem('access_token', res.access_token);
+				window.localStorage.setItem('refresh_token', res.refresh_token);
+				redirectURL = 'user-profile.html'; // Re-direct to User Profile
+			}
+		})
+		.then(() => {
+			window.location.href = redirectURL;
+		});
+	}
+	
 </script>
 </html>
