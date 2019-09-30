@@ -18,13 +18,14 @@
 		.then((res) => {
 			if(!res.hasError) {
 				// Set the tokens in Local Storage
+				console.log(res);
 				window.localStorage.setItem('access_token', res.access_token);
 				window.localStorage.setItem('refresh_token', res.refresh_token);
-				redirectURL = 'user-profile.html'; // Re-direct to User Profile
+				//redirectURL = 'user-profile.html'; // Re-direct to User Profile
 			}
 		})
 		.then(() => {
-			window.location.href = redirectURL;
+			//window.location.href = redirectURL;
 		});
 	}
 </script>
