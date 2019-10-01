@@ -1,0 +1,31 @@
+body {
+    background-color: #b5b5b5;
+}
+
+header {
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    position: fixed;
+    background-color: black;
+    width: 100%;
+}
+
+.leftMenuBar {
+    position: fixed;
+    top: 0px;
+    width: 100px;
+    height: 100%;
+    padding: 10px;
+    box-shadow: 6px 0px 5px -1px rgba(0,0,0,0.4);
+}
+
+.leftMenuBar ul {
+    list-style: none;
+    list-style-position: none;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 25%;
+}
