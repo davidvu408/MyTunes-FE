@@ -9,11 +9,11 @@
 <script>
 	const urlParams = new URLSearchParams(window.location.search);
 	const auth_code = urlParams.get('code');
-	//let redirectURL = 'index.html';
+	let redirectURL = 'index.html';
 	// If auth_code is in URL params
 	if(auth_code !== null) {
 		// Make a request for an Access Token and Refresh Token
-		fetch('https://my-tunes-be.herokuapp.com/spotify-api/access-token?auth_code=' + auth_code)
+		fetch('https://my-tunes-be.herokuapp.com/spotify-api/access-token?authCode=' + auth_code)
 		.then((res) => res.json())
 		.then((res) => {
 			if(!res.hasError) {
@@ -23,11 +23,9 @@
 				redirectURL = 'user-profile.html'; // Re-direct to User Profile
 			}
 		})
-		/*
 		.then(() => {
 			window.location.href = redirectURL;
 		});
-		*/
 	}
 </script>
 </html>
