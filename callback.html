@@ -9,7 +9,7 @@
 <script>
 	const urlParams = new URLSearchParams(window.location.search);
 	const auth_code = urlParams.get('code');
-	let redirectURL = 'index.html';
+	//let redirectURL = 'index.html';
 	// If auth_code is in URL params
 	if(auth_code !== null) {
 		// Make a request for an Access Token and Refresh Token
@@ -23,9 +23,11 @@
 				redirectURL = 'user-profile.html'; // Re-direct to User Profile
 			}
 		})
+		/*
 		.then(() => {
 			window.location.href = redirectURL;
 		});
+		*/
 	}
 </script>
 </html>
