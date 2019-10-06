@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="styles/UserProfile.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
     <title>Profile</title>
   </head>
   <body>
+    <div id="user-info-container" class="container">
+      <div class ="row">
+        <div class="col-lg" align="center">
+          <img src="https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/linus-van-pelt-charlie-browns-all-stars-46.9.jpg" style="width:15em;height:15em" class="rounded-circle"> 
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg" align="center">
+          <h2 style="padding-top:0.5em;">justin</h2> 
+        </div>
+      </div>
+    </div>
     <div id="collage-container" class="container">
       <div class="row no-gutters">
         <div class="col-sm">
@@ -22,74 +36,178 @@
         </div>
       </div>
     </div>
-  </body>
-  <script>
-   // Mock albums JSON
-    var albums = '{ "albums" : [' +
-    '{ "title":"ANIMA" , "artist":"Thom Yorke" , "album_art":"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96" },' +
-    '{ "title":"Schlagenheim" , "artist":"black midi" , "album_art":"https://i.scdn.co/image/282b4b6cd0c829cf94c021c1ce46be16ae4cf879" },' +
-    '{ "title":"The Life of Pierre" , "artist":"Pierre Bourne" , "album_art":"https://i.scdn.co/image/52492b2ebf7587a21678f6aa3cb8ff5428391235" },' +
-    '{ "title":"DJ-Kicks EP" , "artist":"Peggy Gou" , "album_art":"https://i.scdn.co/image/10e412ac1e420b632840c887409ccfc40f6f2e85" },' +
-    '{ "title":"Dreems" , "artist":"Cassius" , "album_art":"https://i.scdn.co/image/a2191407604cfa73a79ee654c6c71e2613eb7c7b"}]}';
+    <script>
+     // Mock users JSON
+     var users = ' { "users" : [' +
+                 '{ "display_name": "justin", "image": "https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/linus-van-pelt-charlie-browns-all-stars-46.9.jpg" },' +
+                 '{ "display_name": "ty lin", "image": "https://i1.rgstatic.net/ii/profile.image/597495746928642-1519465495123_Q512/T_Y_Lin.jpg" }]}';
 
-var albumObj = JSON.parse(albums);
+     // Mock albums JSON
+     var albums = '{ "albums" : [' +
+                  '{ "title":"ANIMA" , "artist":"Thom Yorke" , "album_art":"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96" },' +
+                  '{ "title":"Schlagenheim" , "artist":"black midi" , "album_art":"https://i.scdn.co/image/282b4b6cd0c829cf94c021c1ce46be16ae4cf879" },' +
+                  '{ "title":"The Life of Pierre" , "artist":"Pierre Bourne" , "album_art":"https://i.scdn.co/image/52492b2ebf7587a21678f6aa3cb8ff5428391235" },' +
+                  '{ "title":"DJ-Kicks EP" , "artist":"Peggy Gou" , "album_art":"https://i.scdn.co/image/10e412ac1e420b632840c887409ccfc40f6f2e85" },' +
+                  '{ "title":"Dreems" , "artist":"Cassius" , "album_art":"https://i.scdn.co/image/a2191407604cfa73a79ee654c6c71e2613eb7c7b"}]}';
 
-// Compute number of rows needed
-var rowLength = albumObj.albums.length / 4;
-if (albumObj.albums.length % 4 > 0) rowLength++;
+     var genres = '[{"genre": "Hip-Hop","weight": "0.25"},{"genre": "Rock","weight": "0.5"},{"genre": "Pop","weight": "0.25"}]'
 
-// Number of albums we've filled into a column. Used to make sure we don't check an index out of bounds in the album array.
-var albumCount = 0;
+     var albumObj = JSON.parse(albums);
+     var usersObj = JSON.parse(users);
+     var data = JSON.parse(genres);
 
-// Create rowLength number of rows with 4 columns each
-for (i = 0; i < rowLength; i++) {
-    // Create a row div
-    var rowDiv = document.createElement('div');
-    rowDiv.className = 'row no-gutters';
+     // Compute number of rows needed
+     var rowLength = albumObj.albums.length / 4;
+     if (albumObj.albums.length % 4 > 0) rowLength++;
 
-    // Append 4 column divs into the row div.
-    for (j = 0; j < 4; j++) {
-        // If albumCount has exceeded album array length, then leave empty. Otherwise fill with album info.
-        var colDiv = document.createElement('div');
-        colDiv.className = 'col-sm';
+     // Number of albums we've filled into a column. Used to make sure we don't check an index out of bounds in the album array.
+     var albumCount = 0;
 
-        if (albumCount < albumObj.albums.length) {
-            // Create viewOverlayDiv for hover effect capability
-            var viewOverlayDiv = document.createElement('div');
-            viewOverlayDiv.className = 'view overlay';
+     // Create rowLength number of rows with 4 columns each
+     for (i = 0; i < rowLength; i++) {
+       // Create a row div
+       var rowDiv = document.createElement('div');
+       rowDiv.className = 'row no-gutters';
 
-            // Append the album img to viewOverlayDiv
-            var albumArtImg = document.createElement('img');
-            albumArtImg.className = 'img-fluid';
-            albumArtImg.src = albumObj.albums[albumCount].album_art;
-            viewOverlayDiv.appendChild(albumArtImg);
+       // Append 4 column divs into the row div.
+       for (j = 0; j < 4; j++) {
+         // If albumCount has exceeded album array length, then leave empty. Otherwise fill with album info.
+         var colDiv = document.createElement('div');
+         colDiv.className = 'col-sm';
 
-            // Append maskDiv to viewOverlayDiv which enables the hover effect
-            var maskDiv = document.createElement('div');
-            maskDiv.className = 'mask flex-center rgba-white-strong';
-            // Append text to maskDiv to show up when hovering
-            var albumTitleP = document.createElement('p');
-            albumTitleP.className = 'text-break black-text text-center font-weight-bold';
-            albumTitleP.innerHTML = albumObj.albums[albumCount].title + "<br>" + albumObj.albums[albumCount].artist;
-            maskDiv.appendChild(albumTitleP);
-            /*
-            var albumArtistP = document.createElement('p');
-            albumArtistP.className = 'black-text text-center font-weight-bold';
-            albumArtistP.innerHTML = albumObj.albums[albumCount].artist;
-            maskDiv.appendChild(albumArtistP);
+         if (albumCount < albumObj.albums.length) {
+           // Create viewOverlayDiv for hover effect capability
+           var viewOverlayDiv = document.createElement('div');
+           viewOverlayDiv.className = 'view overlay';
+
+           // Append the album img to viewOverlayDiv
+           var albumArtImg = document.createElement('img');
+           albumArtImg.className = 'img-fluid';
+           albumArtImg.src = albumObj.albums[albumCount].album_art;
+           viewOverlayDiv.appendChild(albumArtImg);
+
+           // Append maskDiv to viewOverlayDiv which enables the hover effect
+           var maskDiv = document.createElement('div');
+           maskDiv.className = 'mask flex-center rgba-white-strong';
+           // Append text to maskDiv to show up when hovering
+           var albumTitleP = document.createElement('p');
+           albumTitleP.className = 'text-break black-text text-center font-weight-bold';
+           albumTitleP.innerHTML = albumObj.albums[albumCount].title + "<br>" + albumObj.albums[albumCount].artist;
+           maskDiv.appendChild(albumTitleP);
+           /*
+              var albumArtistP = document.createElement('p');
+              albumArtistP.className = 'black-text text-center font-weight-bold';
+              albumArtistP.innerHTML = albumObj.albums[albumCount].artist;
+              maskDiv.appendChild(albumArtistP);
             */
 
-            viewOverlayDiv.appendChild(maskDiv);
-            colDiv.appendChild(viewOverlayDiv);
-            albumCount++;
-        }
+           viewOverlayDiv.appendChild(maskDiv);
+           colDiv.appendChild(viewOverlayDiv);
+           albumCount++;
+         }
 
-        rowDiv.appendChild(colDiv);
-    }
+         rowDiv.appendChild(colDiv);
+       }
 
-    // Append the row div onto collageContainer div
-    document.getElementById('collage-container').appendChild(rowDiv);
-}
+       // Append the row div onto collageContainer div
+       document.getElementById('collage-container').appendChild(rowDiv);
+     }
 
-  </script>
+/*
+// Make a pie chart of genre statistics
+     d3.json("http://0.0.0.0:8000/data/genreStats.json")
+    .then(function(data) {
+       var width = 800,
+           height = 250,
+           radius = Math.min(width, height) / 2;
+
+       var color = d3.scale.ordinal()
+                     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+       var arc = d3.svg.arc()
+                   .outerRadius(radius - 10)
+                   .innerRadius(radius - 70);
+
+       var pie = d3.layout.pie()
+                   .sort(null)
+                   .value(function (d) {
+                     return d.weight;
+                   });
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var g = svg.selectAll(".arc")
+            .data(pie(data))
+            .enter().append("g")
+            .attr("class", "arc");
+
+        g.append("path")
+            .attr("d", arc)
+            .style("fill", function (d) {
+                return color(d.data.genre);
+            });
+
+        g.append("text")
+            .attr("transform", function (d) {
+                return "translate(" + arc.centroid(d) + ")";
+            })
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .text(function (d) {
+                return d.data.genre;
+            });
+
+
+    })
+    */
+
+var width = 800,
+           height = 250,
+           radius = Math.min(width, height) / 2;
+
+       var color = d3.scale.ordinal()
+                     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+       var arc = d3.svg.arc()
+                   .outerRadius(radius - 10)
+                   .innerRadius(radius - 70);
+
+       var pie = d3.layout.pie()
+                   .sort(null)
+                   .value(function (d) {
+                     return d.weight;
+                   });
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var g = svg.selectAll(".arc")
+            .data(pie(data))
+            .enter().append("g")
+            .attr("class", "arc");
+
+        g.append("path")
+            .attr("d", arc)
+            .style("fill", function (d) {
+                return color(d.data.genre);
+            });
+
+        g.append("text")
+            .attr("transform", function (d) {
+                return "translate(" + arc.centroid(d) + ")";
+            })
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .text(function (d) {
+                return d.data.genre;
+            });
+    </script>
+  </body>
 </html>

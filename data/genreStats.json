@@ -1,0 +1,12 @@
+[{
+    "genre": "Hip-Hop",
+    "weight": "0.25"
+},
+{
+     "genre": "Rock",
+     "weight": "0.5"
+},
+{
+     "genre": "Pop",
+     "weight": "0.25"
+}]
