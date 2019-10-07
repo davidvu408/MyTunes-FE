@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang = "en-us">
     <head>
         <link rel = "stylesheet", href = "DiscoverFeed.css">
         <title>Discover Feed</title>
     </head>
 
     <body>
-        <header>
-            <img src = "" height="40" width="40">
-            <p>Header information goes here</p>
-        </header>
-        <div class = "leftMenuBar" id = "DiscoverFeedLeftMenu">
+        <div class = "navbar" id = "navbar">
             <ul>
-                <li>Profile</li>
-                <li>Feed</li>
-                <li>Disover</li>
+                <li><a href="Feed.html">Home</a></li>
+                <li><a class = "active" href="DiscoverFeed.html">Discover</a></li>
+                <li><a href="Followers.html">Followers</a></li>
             </ul>
-        </div>
-        <div class = "feedView" id = "DiscoverFeedView">
 
+            <div class="searchbar" id="searchbar">
+                <input type="text" name="search" placeholder="Search Music & People">
+            </div>
+
+            <div class = "profile" id = "profile">
+                <a href="Profile.html">
+                    <img src="images/default_profile.png" alt="images/default_profile.png">
+                </a>
+            </div>
+        </div>
+
+        <div class = "feed" id = "DiscoverFeed">
+            <ul>
+                <article>Feed area</article>
+            </ul>
         </div>
     </body>
 </html>
