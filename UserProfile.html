@@ -13,183 +13,245 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <title>Profile</title>
   </head>
-  <body>
+  <body class="bg-dark">
     <div id="user-info-container" class="container"></div>
+    <div id="genre-chart-container" class="container">
+      <div class="row">
+        <div class="col-lg">
+        <div id="genre-chart-column" class="col-lg" align="center">
+        </div>
+      </div>
+    </div>
     <div id="collage-container" class="container">
       <div class="row no-gutters">
         <div class="col-sm">
-          <h1 class="display-4">Favorite Albums</h1>
+          <h1 class="display-4 text-white">Favorite Albums</h1>
         </div>
       </div>
     </div>
     <script>
-    var access_token = 'BQAWLtkvjugU-fQkvmqLAogs2Lq9WoEwwiIbVS8xPCkWGKAXwYC9oMk-HrrwbmBhqUIg91qUnmMYFSds8NdaTgPP7MsGJ1VxbxdjAdiy1IEX-Bvh8evpMEUVd-WuK1V6HfTs-CTrLKDOVMunkbQxcp7zY7EdIbZUkoZuG-5jVwUHXRi-YkfqjDbJ'
+     var access_token = 'BQDbDWaUW_k7V_E0NyLPb91pChPwMTWyRc3Vp8XmqpKsEOFfN0l9MAK8CHr92IOe3zrhT-1j4wQVcYReL2gOgjUv3f88TNYqxh3aChLQnxOnEzmIBD3okuokjdlT0shu2YOlFgj2jcmlAx-wNsEheygVAUHm4Dkfd6ArDYzYjinMqUYNVGyD7WHx'
 
-// Make GET request for user info and render user image and display name
-const httpUserInfo = new XMLHttpRequest();
-httpUserInfo.overrideMimeType("application/json");
-const userInfoUrl = 'https://my-tunes-be.herokuapp.com/userProfile?accessToken=' + access_token;
-httpUserInfo.open("GET", userInfoUrl);
-httpUserInfo.onreadystatechange = function(){
-    if(httpUserInfo.readyState == 4 && httpUserInfo.status == 200){
-        var userObj = JSON.parse(httpUserInfo.response);
+     // Make GET request for user info and render user image and display name
+     const httpUserInfo = new XMLHttpRequest();
+     const userInfoUrl = 'https://my-tunes-be.herokuapp.com/userProfile?accessToken=' + access_token;
+     httpUserInfo.open("GET", userInfoUrl);
+     httpUserInfo.onreadystatechange = function(){
+       if(httpUserInfo.readyState == 4 && httpUserInfo.status == 200){
+         var userObj = JSON.parse(httpUserInfo.response);
 
-        // Render user image
-        var userImageRow = document.createElement('div');
-        userImageRow.className = "row";
+         // Render user image
+         var userImageRow = document.createElement('div');
+         userImageRow.className = "row";
 
-        var userImageCol = document.createElement('div');
-        userImageCol.className = "col-lg";
-        userImageCol.align = "center";
+         var userImageCol = document.createElement('div');
+         userImageCol.className = "col-lg";
+         userImageCol.align = "center";
 
-        var userImage = document.createElement('img');
-        if (userObj.images[0])
-            userImage.src = userObj.images[0];
-        else
-            userImage.src = 'https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/linus-van-pelt-charlie-browns-all-stars-46.9.jpg'
+         var userImage = document.createElement('img');
+         if (userObj.images[0])
+           userImage.src = userObj.images[0];
+         else
+           userImage.src = 'https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/linus-van-pelt-charlie-browns-all-stars-46.9.jpg'
 
-        userImage.className = "rounded-circle";
-        userImage.style = "width:15em;height:15em";
+         userImage.className = "rounded-circle";
+         userImage.style = "width:12em;height:12em";
 
-        userImageCol.appendChild(userImage);
-        userImageRow.appendChild(userImageCol);
-        document.getElementById('user-info-container').appendChild(userImageRow);
+         userImageCol.appendChild(userImage);
+         userImageRow.appendChild(userImageCol);
+         document.getElementById('user-info-container').appendChild(userImageRow);
 
-        // Render user display name
-        var userDisplayNameRow = document.createElement('div');
-        userDisplayNameRow.className = "row";
+         // Render user display name
+         var userDisplayNameRow = document.createElement('div');
+         userDisplayNameRow.className = "row";
 
-        var userDisplayNameCol = document.createElement('div');
-        userDisplayNameCol.className = "col-lg";
-        userDisplayNameCol.align = "center";
+         var userDisplayNameCol = document.createElement('div');
+         userDisplayNameCol.className = "col-lg";
+         userDisplayNameCol.align = "center";
 
-        var userDisplayNameHeader = document.createElement('h2');
-        userDisplayNameHeader.style = "padding-top:0.5em;"
-        userDisplayNameHeader.innerHTML = userObj.displayName;
+         var userDisplayNameHeader = document.createElement('h2');
+         userDisplayNameHeader.className = "text-white";
+         userDisplayNameHeader.style = "padding-top:0.5em;"
+         userDisplayNameHeader.innerHTML = userObj.displayName;
 
-        userDisplayNameCol.appendChild(userDisplayNameHeader);
-        userDisplayNameRow.appendChild(userDisplayNameCol);
-        document.getElementById('user-info-container').appendChild(userDisplayNameRow);
+         userDisplayNameCol.appendChild(userDisplayNameHeader);
+         userDisplayNameRow.appendChild(userDisplayNameCol);
+         document.getElementById('user-info-container').appendChild(userDisplayNameRow);
 
 
-    }
-};
-httpUserInfo.send();
+       }
+     };
+     httpUserInfo.send();
 
-//Mock users JSON
-var user = '{"birthdate":null,"country":null,"displayName":"Justin","email":null,"externalUrls":{"externalUrls":{"spotify":"https://open.spotify.com/user/dse4lme2kzttx3zgkczi08crr"}},"followers":{"href":null,"total":0},"href":"https://api.spotify.com/v1/users/dse4lme2kzttx3zgkczi08crr","id":"dse4lme2kzttx3zgkczi08crr","images":["https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/linus-van-pelt-charlie-browns-all-stars-46.9.jpg"],"product":null,"type":"USER","uri":"spotify:user:dse4lme2kzttx3zgkczi08crr"}'
+     // Mock albums JSON
+     var albums = '{ "albums" : [' +
+                  '{ "title":"ANIMA" , "artist":"Thom Yorke" , "album_art":"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96" },' +
+                  '{ "title":"Schlagenheim" , "artist":"black midi" , "album_art":"https://i.scdn.co/image/282b4b6cd0c829cf94c021c1ce46be16ae4cf879" },' +
+                  '{ "title":"The Life of Pierre" , "artist":"Pierre Bourne" , "album_art":"https://i.scdn.co/image/52492b2ebf7587a21678f6aa3cb8ff5428391235" },' +
+                  '{ "title":"DJ-Kicks EP" , "artist":"Peggy Gou" , "album_art":"https://i.scdn.co/image/10e412ac1e420b632840c887409ccfc40f6f2e85" },' +
+                  '{ "title":"Dreems" , "artist":"Cassius" , "album_art":"https://i.scdn.co/image/a2191407604cfa73a79ee654c6c71e2613eb7c7b"},' +
+                  '{ "title":"ANIMA" , "artist":"Thom Yorke" , "album_art":"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96" },' +
+                  '{ "title":"Schlagenheim" , "artist":"black midi" , "album_art":"https://i.scdn.co/image/282b4b6cd0c829cf94c021c1ce46be16ae4cf879" },' +
+                  '{ "title":"The Life of Pierre" , "artist":"Pierre Bourne" , "album_art":"https://i.scdn.co/image/52492b2ebf7587a21678f6aa3cb8ff5428391235" },' +
+                  '{ "title":"DJ-Kicks EP" , "artist":"Peggy Gou" , "album_art":"https://i.scdn.co/image/10e412ac1e420b632840c887409ccfc40f6f2e85" }]}'; 
 
-// Mock albums JSON
-var albums = '{ "albums" : [' +
-    '{ "title":"ANIMA" , "artist":"Thom Yorke" , "album_art":"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96" },' +
-    '{ "title":"Schlagenheim" , "artist":"black midi" , "album_art":"https://i.scdn.co/image/282b4b6cd0c829cf94c021c1ce46be16ae4cf879" },' +
-    '{ "title":"The Life of Pierre" , "artist":"Pierre Bourne" , "album_art":"https://i.scdn.co/image/52492b2ebf7587a21678f6aa3cb8ff5428391235" },' +
-    '{ "title":"DJ-Kicks EP" , "artist":"Peggy Gou" , "album_art":"https://i.scdn.co/image/10e412ac1e420b632840c887409ccfc40f6f2e85" },' +
-    '{ "title":"Dreems" , "artist":"Cassius" , "album_art":"https://i.scdn.co/image/a2191407604cfa73a79ee654c6c71e2613eb7c7b"}]}';
+     var genres = ' {"children": [{"weight":281,"name":"pop"},{"weight":264,"name":"rap"},{"weight":255,"name":"pop rap"},{"weight":210,"name":"hip hop"},{"weight":176,"name":"trap music"},{"weight":155,"name":"southern hip hop"},{"weight":153,"name":"dance pop"},{"weight":89,"name":"gangster rap"},{"weight":88,"name":"edm"},{"weight":74,"name":"r&b"},{"weight":72,"name":"urban contemporary"},{"weight":67,"name":"tropical house"},{"weight":57,"name":"post-teen pop"},{"weight":56,"name":"electro pop"},{"weight":55,"name":"electro house"},{"weight":54,"name":"cali rap"},{"weight":49,"name":"atl hip hop"},{"weight":45,"name":"pop edm"},{"weight":43,"name":"underground hip hop"},{"weight":42,"name":"west coast trap"}]}'
 
-var genres = '[{"genre": "Hip-Hop","weight": "0.25"},{"genre": "Rock","weight": "0.5"},{"genre": "Pop","weight": "0.25"}]'
-var albumObj = JSON.parse(albums);
-var data = JSON.parse(genres);
+     var albumObj = JSON.parse(albums);
+     var genreObj = JSON.parse(genres);
 
-// Render favorite albums
-// Compute number of rows needed
-var rowLength = albumObj.albums.length / 4;
-if (albumObj.albums.length % 4 > 0) rowLength++;
+     // Render favorite albums
+     // Compute number of rows needed
+     var rowLength = Math.floor(albumObj.albums.length / 5);
+     if (albumObj.albums.length % 5 > 0) rowLength++;
 
-// Number of albums we've filled into a column. Used to make sure we don't check an index out of bounds in the album array.
-var albumCount = 0;
+     // Number of albums we've filled into a column. Used to make sure we don't check an index out of bounds in the album array.
+     var albumCount = 0;
 
-// Create rowLength number of rows with 4 columns each
-for (i = 0; i < rowLength; i++) {
-    // Create a row div
-    var rowDiv = document.createElement('div');
-    rowDiv.className = 'row no-gutters';
+     // Create rowLength number of rows with 4 columns each
+     for (i = 0; i < rowLength; i++) {
+       // Create a row div
+       var rowDiv = document.createElement('div');
+       rowDiv.className = 'row no-gutters';
+       // Append 4 column divs into the row div.
+       for (j = 0; j < 4; j++) {
+         // If albumCount has exceeded album array length, then leave empty. Otherwise fill with album info.
+         var colDiv = document.createElement('div');
+         colDiv.className = 'col-sm';
+         if (albumCount < albumObj.albums.length) {
+           // Create viewOverlayDiv for hover effect capability
+           var viewOverlayDiv = document.createElement('div');
+           viewOverlayDiv.className = 'view overlay';
+           // Append the album img to viewOverlayDiv
+           var albumArtImg = document.createElement('img');
+           albumArtImg.className = 'img-fluid';
+           albumArtImg.src = albumObj.albums[albumCount].album_art;
+           viewOverlayDiv.appendChild(albumArtImg);
+           // Append maskDiv to viewOverlayDiv which enables the hover effect
+           var maskDiv = document.createElement('div');
+           maskDiv.className = 'mask flex-center rgba-white-strong';
+           // Append text to maskDiv to show up when hovering
+           var albumTitleP = document.createElement('p');
+           albumTitleP.className = 'text-break black-text text-center font-weight-bold';
+           albumTitleP.innerHTML = albumObj.albums[albumCount].title + "<br>" + albumObj.albums[albumCount].artist;
+           maskDiv.appendChild(albumTitleP);
+           viewOverlayDiv.appendChild(maskDiv);
+           colDiv.appendChild(viewOverlayDiv);
+           albumCount++;
+         }
+         rowDiv.appendChild(colDiv);
+       }
+       // Append the row div onto collageContainer div
+       document.getElementById('collage-container').appendChild(rowDiv);
+     }
 
-    // Append 4 column divs into the row div.
-    for (j = 0; j < 4; j++) {
-        // If albumCount has exceeded album array length, then leave empty. Otherwise fill with album info.
-        var colDiv = document.createElement('div');
-        colDiv.className = 'col-sm';
+     // Render bubble chart
+     var diameter = 600;
+     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
-        if (albumCount < albumObj.albums.length) {
-            // Create viewOverlayDiv for hover effect capability
-            var viewOverlayDiv = document.createElement('div');
-            viewOverlayDiv.className = 'view overlay';
+     var bubble = d3.pack(genreObj)
+                    .size([diameter, diameter])
+                    .padding(1.5);
 
-            // Append the album img to viewOverlayDiv
-            var albumArtImg = document.createElement('img');
-            albumArtImg.className = 'img-fluid';
-            albumArtImg.src = albumObj.albums[albumCount].album_art;
-            viewOverlayDiv.appendChild(albumArtImg);
+     var svg = d3.select("#genre-chart-column")
+                 .append("svg")
+                 .attr("width", diameter)
+                 .attr("height", diameter)
+                 .attr("class", "bubble");
 
-            // Append maskDiv to viewOverlayDiv which enables the hover effect
-            var maskDiv = document.createElement('div');
-            maskDiv.className = 'mask flex-center rgba-white-strong';
-            // Append text to maskDiv to show up when hovering
-            var albumTitleP = document.createElement('p');
-            albumTitleP.className = 'text-break black-text text-center font-weight-bold';
-            albumTitleP.innerHTML = albumObj.albums[albumCount].title + "<br>" + albumObj.albums[albumCount].artist;
-            maskDiv.appendChild(albumTitleP);
+     var nodes = d3.hierarchy(genreObj)
+                   .sum(function(d) { return d.weight; });
 
-            viewOverlayDiv.appendChild(maskDiv);
-            colDiv.appendChild(viewOverlayDiv);
-            albumCount++;
-        }
+     var node = svg.selectAll(".node")
+                   .data(bubble(nodes).descendants())
+                   .enter()
+                   .filter(function(d){
+                     return  !d.children
+                   })
+                   .append("g")
+                   .attr("class", "node")
+                   .attr("transform", function(d) {
+                     return "translate(" + d.x + "," + d.y + ")";
+                   });
 
-        rowDiv.appendChild(colDiv);
-    }
+     node.append("title")
+         .text(function(d) {
+           return d.name + ": " + d.weight;
+         });
 
-    // Append the row div onto collageContainer div
-    document.getElementById('collage-container').appendChild(rowDiv);
-}
+     node.append("circle")
+         .attr("r", function(d) {
+           return d.r;
+         })
+         .style("fill", function(d,i) {
+           return color(i);
+         });
 
-// Render pie chart
-var width = 800,
-    height = 250,
-    radius = Math.min(width, height) / 2;
+     node.append("text")
+         .attr("dy", ".2em")
+         .style("text-anchor", "middle")
+         .text(function(d) {
+           return d.data.name;
+         })
+         .attr("font-family", "sans-serif")
+         .attr("font-size", function(d){
+           return d.r/5;
+         })
+         .attr("fill", "white");
+     
+     d3.select(self.frameElement)
+       .style("height", diameter + "em");
 
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+     // Render pie chart
+     /*
+        var width = 800,
+        height = 250,
+        radius = Math.min(width, height) / 2;
 
-var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(radius - 70);
+        var color = d3.scale.ordinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-var pie = d3.layout.pie()
-    .sort(null)
-    .value(function (d) {
+        var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 70);
+
+        var pie = d3.layout.pie()
+        .sort(null)
+        .value(function (d) {
         return d.weight;
-    });
+        });
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        var svg = d3.select("#genre-chart-column").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-var g = svg.selectAll(".arc")
-    .data(pie(data))
-    .enter().append("g")
-    .attr("class", "arc");
+        var g = svg.selectAll(".arc")
+        .data(pie(genreObj))
+        .enter().append("g")
+        .attr("class", "arc");
 
-g.append("path")
-    .attr("d", arc)
-    .style("fill", function (d) {
-        return color(d.data.genre);
-    });
+        g.append("path")
+        .attr("d", arc)
+        .style("fill", function (d) {
+        return color(d.data.name);
+        });
 
-g.append("text")
-    .attr("transform", function (d) {
+        g.append("text")
+        .attr("transform", function (d) {
         return "translate(" + arc.centroid(d) + ")";
-    })
-    .attr("dy", ".35em")
-    .style("text-anchor", "middle")
-    .text(function (d) {
-        return d.data.genre;
-    });
-</script>
-    </body>
-    </html>
+        })
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function (d) {
+        return d.data.name;
+        });
+      */
+
+    </script>
+  </body>
+</html>
