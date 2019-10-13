@@ -28,7 +28,7 @@ if (auth_code !== null) {
                     headers: {
                         'Content-Type': 'text/plain'
                     },
-                    body: refresh_token
+                    body: res.refreshToken
                 });
             }
         })
