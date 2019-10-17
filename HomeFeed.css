@@ -3,8 +3,6 @@ body {
 }
 
 .search-bar{
-    width: 250px !important;
-    height: 25px !important;
     border: none;
     border-radius: 20px !important;
 }

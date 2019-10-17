@@ -1,33 +1,153 @@
 <!DOCTYPE html>
-<html lang = "en-us">
-    <head>
-        <link rel = "stylesheet", href = "DiscoverFeed.css">
-        <title>Discover Feed</title>
-    </head>
+<html lang="en-us">
+	<head>
 
-    <body>
-        <div class = "navbar" id = "navbar">
-            <ul>
-                <li><a href="Feed.html">Home</a></li>
-                <li><a class = "active" href="DiscoverFeed.html">Discover</a></li>
-                <li><a href="Followers.html">Followers</a></li>
-            </ul>
+		<title>Discover Feed</title>
 
-            <div class="searchbar" id="searchbar">
-                <input type="text" name="search" placeholder="Search Music & People">
-            </div>
+		<link rel="stylesheet", href="DiscoverFeed.css">
 
-            <div class = "profile" id = "profile">
-                <a href="Profile.html">
-                    <img src="images/default_profile.png" alt="images/default_profile.png">
-                </a>
-            </div>
-        </div>
+		<!--Awesome Fonts Link-->
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <div class = "feed" id = "DiscoverFeed">
-            <ul>
-                <article>Feed area</article>
-            </ul>
-        </div>
-    </body>
+		<!--Bootstrap links-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<!--Bootstrap links-->
+		
+	</head>
+
+	<body>
+		<nav class="navbar transparent navbar-expand-md navbar-dark">
+			<a class="navbar-brand" href="#">MyTunes</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav navbar-left">
+					<li class="nav-item"><a class="nav-link" href="HomeFeed.html">Home</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#">Discover</a></li>
+				</ul>
+
+				<form class="form-inline mr-5 ml-auto">
+					<div class="md-form">
+						<input class="search-bar form-control-sm" type="text" placeholder="Search" aria-label="Search">
+					</div>
+					<button class="btn btn-outline-white ml-0" type="submit" aria-describedby="search-icon">
+						<i class="fa fa-search text-white ml-0" aria-label="search-icon"></i>
+					</button>
+				</form>
+
+				<a href="#" class="nav-profile-icon-container nav-link">
+				  <img class="nav-profile-picture" src="images/default_profile.png">
+				</a>
+			</div>
+		</nav>
+
+		<div class="feed" id="discover-feed"></div>
+
+	<script>
+
+		var feedArea = document.getElementById("discover-feed");
+
+		var genresObj 	= 	{genres: [{name:"rock"}, {name:"pop"}, {name:"hip-hop"}, {name:"alternative"}]};
+		var artistsObj 	= 	{artists:[{name:"Thom Yorke"}, {name:"Thom Yorke"}, {name:"Thom Yorke"}]};
+		var albumsObj 	= 	{albumlist: [
+								{title: "ANIMA", artist:"Thom Yorke", album_art:"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96"},
+								{title: "ANIMA", artist:"Thom Yorke", album_art:"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96"},
+								{title: "ANIMA", artist:"Thom Yorke", album_art:"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96"},
+							]};
+
+		var postsObj = 	{posts: [
+							{username:"Chris", profile_picture:"images/default_profile.png", recent_albums: albumsObj, favorite_genres: genresObj, favorite_artists: artistsObj},
+							{username:"David", profile_picture:"images/default_profile.png", recent_albums: albumsObj, favorite_genres: genresObj, favorite_artists: artistsObj},
+							{username:"Justin",profile_picture:"images/default_profile.png", recent_albums: albumsObj, favorite_genres: genresObj, favorite_artists: artistsObj}
+						]};
+
+		// Create div row elements for each post
+		for(i = 0; i < postsObj.posts.length; i++){
+			var rowDiv = document.createElement('div');
+			rowDiv.className = 'row';
+
+			// Create columns in each row div to separate different elements of each post
+			// such as username, profile pic, albums, artists, and genres
+			for(j = 0; j < 5; j++){
+				var colDiv = document.createElement('div');
+				colDiv.className='col-md';
+				
+				// Fill the correct columns with their respective content
+				// 0 = profilepic, 1 = username, 2 = recent_albums, 3 = favorite_genres, 4 = favorite_artists
+				switch(j){
+					case 0:
+						// Append user profile picture to the first colDiv
+						var picDiv = document.createElement('div');
+						var picImg = document.createElement('img');
+						picImg.className = 'img-fluid';
+						picImg.src = postsObj.posts[i].profile_picture;
+						picDiv.appendChild(picImg);
+						colDiv.appendChild(picDiv);
+						break;
+					case 1:
+						// Append username to the second colDiv
+						var nameDiv = document.createElement('div');
+						var nameTxt = document.createElement('p');
+						nameTxt.className = 'text-md';
+						nameTxt.innerHTML = postsObj.posts[i].username;
+						nameDiv.appendChild(nameTxt);
+						colDiv.appendChild(nameDiv);
+						break;
+					case 2:
+						var albumDiv = document.createElement('div');
+						albumDiv.className = "row";
+						// Append each album image to the albumDiv row element
+						for(k = 0; k < 3; k++){
+							var albumCol = document.createElement('div');
+							albumCol.className = "col-sm";
+							var albumImg = document.createElement('img');
+							albumImg.className = "img-fluid";
+							albumImg.src = postsObj.posts[i].recent_albums.albumlist[k].album_art;
+							albumCol.appendChild(albumImg);
+							albumDiv.appendChild(albumCol);
+						}
+						colDiv.appendChild(albumDiv);
+						break;
+					case 3:
+						// Append favorite genres to the appropriate colDiv
+						var genreDiv = document.createElement('div');
+						var genreNames = document.createElement('p');
+						genreNames.className = "text-sm";
+
+						for(k = 0; k < postsObj.posts[i].favorite_genres.genres.length; k++){
+							genreNames.innerHTML += postsObj.posts[i].favorite_genres.genres[k].name;
+						}
+						genreDiv.appendChild(genreNames);
+						colDiv.appendChild(genreDiv);
+						break;
+					case 4:
+						// Append favorite arstist to the appropriate colDiv
+						var artistDiv = document.createElement('div');
+						var artistNames = document.createElement('p');
+						artistNames.className = "text-sm";
+
+						for(k = 0; k < postsObj.posts[i].favorite_artists.artists.length; k++){
+							artistNames.innerHTML += postsObj.posts[i].favorite_artists.artists[k].name;
+						}
+						genreDiv.appendChild(artistNames);
+						colDiv.appendChild(artistDiv);
+						break;
+					default:
+						break;
+				}
+				rowDiv.appendChild(colDiv);
+			}
+			feedArea.appendChild(rowDiv);
+		}
+
+	</script>
+
+	</body>
 </html>
