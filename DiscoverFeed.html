@@ -55,6 +55,7 @@
 		var feedArea = document.getElementById("discover-feed");
 
 		var genresObj 	= 	{genres: [{name:"rock"}, {name:"pop"}, {name:"hip-hop"}, {name:"alternative"}]};
+
 		var artistsObj 	= 	{artists:[{name:"Thom Yorke"}, {name:"Thom Yorke"}, {name:"Thom Yorke"}]};
 		var albumsObj 	= 	{albumlist: [
 								{title: "ANIMA", artist:"Thom Yorke", album_art:"https://i.scdn.co/image/3ecc65012582d9507bfad45fb51d7bcdfc655f96"},
@@ -68,16 +69,38 @@
 							{username:"Justin",profile_picture:"images/default_profile.png", recent_albums: albumsObj, favorite_genres: genresObj, favorite_artists: artistsObj}
 						]};
 
+		var refresh_token = 'AQCL_2kiLhBzYRqH7yZTcomRdx3jcL9OiB1BBk72SP09onj9A5dlC0l4sFjrdxJe5KgLayq5I12sCAiS-ImlGMw_HqHqeUe-IlohpLD1oGPSFulbQr8jd_HAVkaMMX_--8eSXQ';
+		const httpUserRequest = new XMLHttpRequest();
+		const userInfoUrl = 'https://my-tunes-be.herokuapp.com/userProfile?accessToken=' + refresh_token;
+
+		var user = {
+			profile_picture: "images/default_profile.png",
+			username: "",
+			favorite_albums: "",
+			favorite_genres: "",
+			favorite_artists: ""
+		};
+
+		// JS obj w/ JSON fields
+		var postObj = {
+			user_image: user.profile_picture,
+			user_name: user.username,
+			user_albums: user.favorite_albums,
+			user_genres: user.favorite_genres,
+			user_artists: user.favorite_artists
+		};
+
 		// Create div row elements for each post
 		for(i = 0; i < postsObj.posts.length; i++){
 			var rowDiv = document.createElement('div');
-			rowDiv.className = 'row';
+			rowDiv.className = 'postDiv row';
 
 			// Create columns in each row div to separate different elements of each post
 			// such as username, profile pic, albums, artists, and genres
 			for(j = 0; j < 5; j++){
 				var colDiv = document.createElement('div');
 				colDiv.className='col-md';
+				colDiv.style = "margin: 2px;";
 				
 				// Fill the correct columns with their respective content
 				// 0 = profilepic, 1 = username, 2 = recent_albums, 3 = favorite_genres, 4 = favorite_artists
@@ -86,7 +109,8 @@
 						// Append user profile picture to the first colDiv
 						var picDiv = document.createElement('div');
 						var picImg = document.createElement('img');
-						picImg.className = 'img-fluid';
+						colDiv.className = " col-1";
+						picImg.className = 'img-fluid rounded-circle';
 						picImg.src = postsObj.posts[i].profile_picture;
 						picDiv.appendChild(picImg);
 						colDiv.appendChild(picDiv);
@@ -95,7 +119,8 @@
 						// Append username to the second colDiv
 						var nameDiv = document.createElement('div');
 						var nameTxt = document.createElement('p');
-						nameTxt.className = 'text-md';
+						colDiv.className = " col-10";
+						nameTxt.className = 'text-md text-light';
 						nameTxt.innerHTML = postsObj.posts[i].username;
 						nameDiv.appendChild(nameTxt);
 						colDiv.appendChild(nameDiv);
@@ -108,6 +133,7 @@
 							var albumCol = document.createElement('div');
 							albumCol.className = "col-sm";
 							var albumImg = document.createElement('img');
+							colDiv.className = " col-8";
 							albumImg.className = "img-fluid";
 							albumImg.src = postsObj.posts[i].recent_albums.albumlist[k].album_art;
 							albumCol.appendChild(albumImg);
@@ -119,11 +145,15 @@
 						// Append favorite genres to the appropriate colDiv
 						var genreDiv = document.createElement('div');
 						var genreNames = document.createElement('p');
-						genreNames.className = "text-sm";
+						genreNames.className = "text-sm text-light";
+						colDiv.className = " col-6";
 
-						for(k = 0; k < postsObj.posts[i].favorite_genres.genres.length; k++){
-							genreNames.innerHTML += postsObj.posts[i].favorite_genres.genres[k].name;
+						genreNames.innerHTML = "Favorite Genres: <br>";
+						for(k = 0; k < postsObj.posts[i].favorite_genres.genres.length-1; k++){
+							genreNames.innerHTML += postsObj.posts[i].favorite_genres.genres[k].name + ", ";
 						}
+						genreNames.innerHTML += postsObj.posts[i].favorite_genres.genres[k].name;
+
 						genreDiv.appendChild(genreNames);
 						colDiv.appendChild(genreDiv);
 						break;
@@ -131,12 +161,16 @@
 						// Append favorite arstist to the appropriate colDiv
 						var artistDiv = document.createElement('div');
 						var artistNames = document.createElement('p');
-						artistNames.className = "text-sm";
+						artistNames.className = "text-sm text-light";
+						colDiv.className = " col-6";
 
-						for(k = 0; k < postsObj.posts[i].favorite_artists.artists.length; k++){
-							artistNames.innerHTML += postsObj.posts[i].favorite_artists.artists[k].name;
+						artistNames.innerHTML = "Favoite Artists: <br>";
+						for(k = 0; k < postsObj.posts[i].favorite_artists.artists.length-1; k++){
+							artistNames.innerHTML += postsObj.posts[i].favorite_artists.artists[k].name + ", ";
 						}
-						genreDiv.appendChild(artistNames);
+						artistNames.innerHTML += postsObj.posts[i].favorite_artists.artists[k].name;
+
+						artistDiv.appendChild(artistNames);
 						colDiv.appendChild(artistDiv);
 						break;
 					default:
