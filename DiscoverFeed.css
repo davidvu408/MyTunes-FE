@@ -1,6 +1,7 @@
 body {
     background: rgb(2,0,36);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
+    background: repeating-linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
+    background-attachment: fixed;
 }
 
 .search-bar{
