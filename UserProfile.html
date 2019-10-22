@@ -85,13 +85,15 @@
        };
        httpUserInfo.send();
 
-       // Make GET request for top album info and render favorite albums section
-       const httpTopAlbums = new XMLHttpRequest();
-       const topAlbumsUrl = 'https://my-tunes-be.herokuapp.com/topAlbums?refreshToken=' + refresh_token;
-       httpTopAlbums.open("GET", topAlbumsUrl);
-       httpTopAlbums.onreadystatechange = function(){
-         if(httpTopAlbums.readyState == 4 && httpTopAlbums.status == 200){
-           var albumObj = JSON.parse(httpTopAlbums.response);
+       // Make GET request for userProfileModel which contains top album information, top genres, song popularity, and song time range preferences.
+       const httpUserProfile = new XMLHttpRequest();
+       const userProfileUrl = 'https://my-tunes-be.herokuapp.com/userProfileModel?refreshToken=' + refresh_token;
+       httpUserProfile.open("GET", userProfileUrl);
+       httpUserProfile.onreadystatechange = function(){
+         if(httpUserProfile.readyState == 4 && httpUserProfile.status == 200){
+           var userProfileObj = JSON.parse(httpUserProfile.response);
+           var albumObj = userProfileObj['topAlbums']
+           var genreObj = { 'children': userProfileObj['topGenres'] };
 
            // Render favorite albums
            // Compute number of rows needed
@@ -143,27 +145,9 @@
              document.getElementById('collage-container').appendChild(rowDiv);
            }
 
-         }
-       };
-       httpTopAlbums.send();
-
-       var genres = ' {"children": [{"weight":281,"name":"pop"},{"weight":264,"name":"rap"},{"weight":255,"name":"pop rap"},{"weight":210,"name":"hip hop"},{"weight":176,"name":"trap music"},{"weight":155,"name":"southern hip hop"},{"weight":153,"name":"dance pop"},{"weight":89,"name":"gangster rap"},{"weight":88,"name":"edm"},{"weight":74,"name":"r&b"},{"weight":72,"name":"urban contemporary"},{"weight":67,"name":"tropical house"},{"weight":57,"name":"post-teen pop"},{"weight":56,"name":"electro pop"},{"weight":55,"name":"electro house"},{"weight":54,"name":"cali rap"},{"weight":49,"name":"atl hip hop"},{"weight":45,"name":"pop edm"},{"weight":43,"name":"underground hip hop"},{"weight":42,"name":"west coast trap"}]}'
-
-       //var albumObj = JSON.parse(albums);
-       //var genreObj = JSON.parse(genres);
-
-       // Make GET request for top genre info and render top genres section
-       const httpTopGenres = new XMLHttpRequest();
-       const topGenresUrl = 'https://my-tunes-be.herokuapp.com/topGenres?refreshToken=' + refresh_token;
-       httpTopGenres.open("GET", topGenresUrl);
-       httpTopGenres.onreadystatechange = function(){
-         if(httpTopGenres.readyState == 4 && httpTopGenres.status == 200){
-           var genreObj = JSON.parse(httpTopGenres.response);
-           genreObj = { 'children': genreObj };
-
-           // Render bubble chart, uses v4 of d3
+             // Render bubble chart, uses v4 of d3
            var diameter = 800;
-           var color = d3.scaleOrdinal(d3.schemeCategory20);
+             var color = d3.scaleOrdinal(d3.schemeCategory20);
 
            var bubble = d3.pack(genreObj)
                           .size([diameter, diameter])
@@ -217,10 +201,11 @@
            
            d3.select(self.frameElement)
              .style("height", diameter + "em");
-
          }
        };
-       httpTopGenres.send();
+       httpUserProfile.send();
+
+       var genres = ' {"children": [{"weight":281,"name":"pop"},{"weight":264,"name":"rap"},{"weight":255,"name":"pop rap"},{"weight":210,"name":"hip hop"},{"weight":176,"name":"trap music"},{"weight":155,"name":"southern hip hop"},{"weight":153,"name":"dance pop"},{"weight":89,"name":"gangster rap"},{"weight":88,"name":"edm"},{"weight":74,"name":"r&b"},{"weight":72,"name":"urban contemporary"},{"weight":67,"name":"tropical house"},{"weight":57,"name":"post-teen pop"},{"weight":56,"name":"electro pop"},{"weight":55,"name":"electro house"},{"weight":54,"name":"cali rap"},{"weight":49,"name":"atl hip hop"},{"weight":45,"name":"pop edm"},{"weight":43,"name":"underground hip hop"},{"weight":42,"name":"west coast trap"}]}'
 
        // Render pie chart, uses v3 of d3
        /*
