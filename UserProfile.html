@@ -74,16 +74,19 @@
         </div>
       </div>
       <script type="text/javascript">
+       // Get the query parameters of the current URL
        const urlParams = new URLSearchParams(window.location.search);
+       // Get the 'user' query parameter
        const userParam = urlParams.get('user');
 
-       var req = new XMLHttpRequest(); // New request object
+       // New request to hit PHP script for retrieving the refresh token associated with userParam
+       var req = new XMLHttpRequest(); 
        req.open("POST", "refreshToken.php", true);
        req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+       // Send userParam as a query parameter to the php script
        req.send("user=" + userParam);
        req.onload = function() {
-         // This is where you handle what to do with the response.
-         // The actual data is found on this.responseText
+         // Get the response from refreshToken.php
          var response = JSON.parse(this.responseText);
          console.log(response);
          var refreshToken = response['refresh_token'];
