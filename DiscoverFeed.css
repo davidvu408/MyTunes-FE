@@ -1,13 +1,12 @@
 body {
-    background: rgb(2,0,36);
-    background: repeating-linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
+    background: repeating-linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
     background-attachment: fixed;
 }
 
 .search-bar{
     width: 250px !important;
     height: 25px !important;
-    border: none;
+    border: none !important;
     border-radius: 20px !important;
 }
 
@@ -25,7 +24,6 @@ body {
 
 .feed {
     position: relative;
-    background-color: #FFFFFF !important;
     margin: auto;
     top: 30px;
     width: 50%;
@@ -33,9 +31,4 @@ body {
     left: 50%;
     transform: translateX(-100%);
     border: 1px solid black;
-}
-
-.postDiv{
-    background: rgba(51, 51, 51, 1.0);
-    border: 1px solid rgba(250, 250, 250) !important;
 }
