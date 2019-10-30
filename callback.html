@@ -10,7 +10,8 @@
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const auth_code = urlParams.get('code');
-let redirectURL = 'index.html';
+
+let redirectURL = './index.html';
 // If auth_code is in URL params
 if (auth_code !== null) {
     // Make a request for an Access Token and Refresh Token
@@ -20,16 +21,7 @@ if (auth_code !== null) {
             if (!res.hasError) {
                 // Set the tokens in Local Storage
                 window.localStorage.setItem('refreshToken', res.refreshToken);
-                redirectURL = 'user-profile.html'; // Re-direct to User Profile
-
-                // Persist Refresh Token on Application Database
-                return fetch('https://my-tunes-be.herokuapp.com/refreshToken', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    },
-                    body: res.refreshToken
-                });
+                redirectURL = './user-profile.html'; // Re-direct to User Profile
             }
         })
         .then(() => {

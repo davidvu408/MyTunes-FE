@@ -1,0 +1,31 @@
+body {
+	background: linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(35,35,35,1) 65%, rgba(60,60,60,1) 85%, rgba(75,75,75,1) 100%);
+	background-attachment: fixed;
+}
+
+.search-bar{
+    width: 250px !important;
+    height: 25px !important;
+    border: none !important;
+    border-radius: 20px !important;
+}
+
+.nav-profile-icon-container{
+    padding-left: 0 !important;
+}
+
+.nav-profile-picture{
+    width: 25px;
+    height: 25px;
+    left: 50% !important;
+    border-radius: 50% !important;
+    border: none;
+}
+
+.container h2{
+	color: white;
+}
+
+.container h1{
+	color: white;
+}
