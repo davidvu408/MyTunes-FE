@@ -35,11 +35,11 @@ var postsObj = {
 // Make GET request for discovery feed data and render the users listed within the response
 var urlParams = new URLSearchParams(window.location.search);
 var currPageNum = urlParams.get('page');
-if(currpageNum == null) {
-    currpageNum = 0;
+if(currPageNum == null) {
+    currPageNum = 0;
 }
 const httpDiscoveryFeed = new XMLHttpRequest();
-const discoveryFeedUrl = 'https://my-tunes-be.herokuapp.com//discoveryFeed?pageIndex=' + currpageNum + '&refreshToken=' + refresh_token;
+const discoveryFeedUrl = 'https://my-tunes-be.herokuapp.com//discoveryFeed?pageIndex=' + currPageNum + '&refreshToken=' + refresh_token;
 httpDiscoveryFeed.open("GET", discoveryFeedUrl);
 httpDiscoveryFeed.onreadystatechange = function() {
     if (httpDiscoveryFeed.readyState == 4 && httpDiscoveryFeed.status == 200) {
