@@ -1,5 +1,5 @@
 body {
-    background: repeating-linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
+	background: repeating-linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
     background-attachment: fixed;
 }
 
@@ -22,13 +22,26 @@ body {
     border: none;
 }
 
-.feed {
-    position: relative;
-    margin: auto;
-    top: 30px;
-    width: 50%;
-    height: 100%;
-    left: 50%;
-    transform: translateX(-100%);
-    border: 1px solid black;
+.container h2{
+    color: white;
+}
+
+.container h1{
+	color: white;
+}
+
+.xAxis {
+    stroke: white;
+}
+
+.xAxis path{
+    stroke: white;
+}
+
+.yAxis {
+    stroke: white;
+}
+
+.yAxis path {
+    stroke: white;
 }
