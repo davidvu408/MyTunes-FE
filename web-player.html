@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spotify Web Playback</title>
+</head>
+<body>
+  <iframe src="https://open.spotify.com/embed/album/0CKiI5WdJ5rzUIK8hyD3SY" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  <iframe src="https://open.spotify.com/embed/album/2GBJg7nTQs3go1w24ECKvy" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  <iframe src="https://open.spotify.com/embed/track/1Rr3ELmKFgoMiDwB1HYbvW" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const token = 'BQAil2La68DYchx5rnr74OiRfLpzBGLDrBTZVClzGyT5o1ljz_UEFia61a6RoAZG8ggnDJARsX-2oeRlLInWNbd31gF3EN34xEZNuDkSqzR4sEIrl3UBZIQ_omnDshxceyW4KOe_v6Fvp24QEckjnlp7otKEoW3U0W2AeDTYI0OVhFK5Vfc31G3JJg';
+      const player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); }
+      });
+
+      // Error handling
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+      // Playback status updates
+      player.addListener('player_state_changed', state => { console.log(state); });
+
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+      });
+
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+    };
+  </script>
+</body>
+</html>
