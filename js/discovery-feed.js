@@ -35,7 +35,7 @@ var postsObj = {
 // Make GET request for discovery feed data and render the users listed within the response
 var urlParams = new URLSearchParams(window.location.search);
 var currPageNum = urlParams.get('page');
-if(currpageNum == null) {
+if(currPageNum == null) {
     currPageNum = 0;
 }
 const httpDiscoveryFeed = new XMLHttpRequest();
