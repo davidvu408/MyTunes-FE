@@ -1,6 +1,8 @@
 body {
-    background: repeating-linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
-    background-attachment: fixed;
+    /*background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(34,34,34,1) 65%, rgba(65,65,65,1) 100%);*/
+    background: #303030 !important;
+    background-image: url('images/background_feed.jpg') !important;
+    background-attachment: fixed !important;
 }
 
 .search-bar{
@@ -22,6 +24,14 @@ body {
     border: none;
 }
 
+.link:hover{
+    cursor: pointer;
+}
+
+.postDiv{
+    background: #303030;
+}
+
 .feed {
     position: relative;
     margin: auto;
@@ -30,5 +40,8 @@ body {
     height: 100%;
     left: 50%;
     transform: translateX(-100%);
-    border: 1px solid black;
+    background: #404040;
+    padding-top: 3%;
+    padding-right: 3%;
+    padding-left: 3%;
 }
