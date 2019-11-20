@@ -43,7 +43,7 @@ var recentlyPlayed = {
 for (i = 0; i < recentlyPlayed['entries'].length; i++) {
     var currUser = recentlyPlayed['entries'][i]; 
     var rowDiv = document.createElement('div');
-    rowDiv.className = "postDiv row-auto bottom5 transparent";
+    rowDiv.className = "postDiv row-auto bottom5";
     // Create columns in each row div to separate different elements of each post
     // such as username, profile pic, albums, artists, and genres
     for (j = 0; j < 3; j++) {

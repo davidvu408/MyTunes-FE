@@ -1,6 +1,7 @@
 body {
-    background: repeating-linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(34,34,34,1) 20%, rgba(43,43,43,1) 40%, rgba(74,74,74,1) 100%);
-    background-attachment: fixed;
+    background: #303030 !important;
+    background-image: url('../images/background_feed.jpg') !important;
+    background-attachment: fixed !important;
 }
 
 .search-bar{
@@ -22,12 +23,15 @@ body {
     border: none;
 }
 
+.link:hover{
+    cursor: pointer;
+}
+
 .feed {
     position: relative;
     margin: auto;
     width: fit-content;
     height: 100%;
-    border: 1px solid black;
 }
 
 .bottom5 {
