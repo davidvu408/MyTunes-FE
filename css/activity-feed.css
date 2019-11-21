@@ -1,0 +1,46 @@
+body {
+    background: #303030 !important;
+    background-image: url('../images/background_feed.jpg') !important;
+    background-attachment: fixed !important;
+}
+
+.search-bar{
+    width: 250px !important;
+    height: 25px !important;
+    border: none !important;
+    border-radius: 20px !important;
+}
+
+.nav-profile-icon-container{
+    padding-left: 0 !important;
+}
+
+.nav-profile-picture{
+    width: 25px;
+    height: 25px;
+    left: 50% !important;
+    border-radius: 50% !important;
+    border: none;
+}
+
+.link:hover{
+    cursor: pointer;
+}
+
+.feed {
+    position: relative;
+    margin: auto;
+    width: fit-content;
+    height: 100%;
+}
+
+.bottom5 {
+  margin-bottom:5%;
+}
+
+.activity-feed-headline {
+  text-align: center;
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 2.875em;
+}
