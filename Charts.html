@@ -137,7 +137,7 @@
                 // Render Bargraph
                 //
                 
-                //var songObj = userProfileObj['songTimeRange'];
+                var songObj = userProfileObj['songTimeRange'];
 
                 // set the dimensions and margins of the graph
                 var margin = {top: 20, right: 30, bottom: 40, left: 90},
@@ -153,7 +153,7 @@
                             "translate(" + margin.left + "," + margin.top + ")");
 
                 // load the data
-                d3.json("songs.json", function(data) {
+                d3.json(songObj, function(data) {
 
                     // Add X axis
                     var x = d3.scaleLinear()
@@ -211,7 +211,7 @@
                 // Render song popularity chart
                 //
 
-                //var popObject = userProfileObj['songPopularity'];
+                var popObject = userProfileObj['songPopularity'];
 
                 var svg3 = d3.select("#song-pop-graph")
                     .append("svg")
@@ -222,7 +222,7 @@
                             "translate(" + margin.left + "," + margin.top + ")");
 
                 // Load the data
-                d3.json("popularity.json", function(error, data){
+                d3.json(popObject, function(error, data){
 
                     // Add X axis
                     var x = d3.scaleLinear()
