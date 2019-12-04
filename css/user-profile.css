@@ -1,5 +1,5 @@
 body {
-	background: linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(35,35,35,1) 65%, rgba(60,60,60,1) 85%, rgba(75,75,75,1) 100%);
+  background-image: url("/images/background_feed.jpg");
 	background-attachment: fixed;
 }
 
