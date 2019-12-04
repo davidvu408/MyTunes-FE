@@ -91,7 +91,7 @@ function renderTimeEraPreference(userProfileObj) {
                 (height + margin.top + 20) + ")")
           .style("text-anchor", "middle")
           .style("stroke", "white")
-          .text("value");
+          .text("Preference Score");
      // text label for the y axis
      svg2.append("text")
           .attr("transform", "rotate(-90)")
@@ -100,7 +100,7 @@ function renderTimeEraPreference(userProfileObj) {
           .attr("dy", "1em")
           .style("text-anchor", "middle")
           .style("stroke", "white")
-          .text("year");
+          .text("Year of Release");
 
 }
 
