@@ -9,6 +9,7 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    
 
     <!-- Awesome Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,7 +21,10 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <script type="javascript" src="popularity.json"></script>
+    <script type="javascript" src="songs.json>"></script>
 
     <title>Profile</title>
   </head>
@@ -68,217 +72,151 @@
         <div id="song-pop-graph" class="container"></div>
       </div>
     <script>
-        const refresh_token = localStorage.getItem('refreshToken');
-       
-        // Make GET request for userProfileModel which contains top album information, top genres, song popularity, and song time range preferences.
-        const httpUserProfile = new XMLHttpRequest();
-        const userProfileUrl = 'https://my-tunes-be.herokuapp.com/userProfileModel?refreshToken=' + refresh_token;
-        httpUserProfile.open("GET", userProfileUrl);
-        httpUserProfile.onreadystatechange = function(){
-            if(httpUserProfile.readyState == 4 && httpUserProfile.status == 200){
-                var userProfileObj = JSON.parse(httpUserProfile.response);
-                var albumObj = userProfileObj['topAlbums']
-                var genreObj = { 'children': userProfileObj['topGenres'] };
+        //
+        // Render Bargraph
+        //
+        
+        //var songObj = userProfileObj['songTimeRange'];
 
-                //
-                // Render bubble chart, uses v4 of d3
-                //
-                var diameter = 800;
-                var color = d3.scaleOrdinal(d3.schemeCategory20);
-                var bubble = d3.pack(genreObj)
-                                .size([diameter, diameter])
-                                .padding(1.5);
-                var svg = d3.select("#genre-chart-column")
-                            .append("svg")
-                            .attr("width", diameter)
-                            .attr("height", diameter)
-                            .attr("class", "bubble");
-                var nodes = d3.hierarchy(genreObj)
-                                .sum(function(d) { return d.weight; });
-                var node = svg.selectAll(".node")
-                                .data(bubble(nodes).descendants())
-                                .enter()
-                                .filter(function(d){
-                                return  !d.children
-                                })
-                                .append("g")
-                                .attr("class", "node")
-                                .attr("transform", function(d) {
-                                return "translate(" + d.x + "," + d.y + ")";
-                                });
-                node.append("title")
-                    .text(function(d) {
-                        return d.name + ": " + d.weight;
-                    });
-                node.append("circle")
-                    .attr("r", function(d) {
-                        return d.r;
-                    })
-                    .style("fill", function(d,i) {
-                        return color(i);
-                    });
-                node.append("text")
-                    .attr("dy", ".2em")
-                    .style("text-anchor", "middle")
-                    .text(function(d) {
-                        return d.data.name;
-                    })
-                    .attr("font-family", "sans-serif")
-                    .attr("font-size", function(d){
-                        return d.r/5;
-                    })
-                    .attr("fill", "white");
-                
-                d3.select(self.frameElement)
-                    .style("height", diameter + "em");
-            
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 30, bottom: 40, left: 90},
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
-                //
-                // Render Bargraph
-                //
-                
-                //var songObj = userProfileObj['songTimeRange'];
+        var svg2 = d3.select("#song-time-graph")
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform",
+                    "translate(" + margin.left + "," + margin.top + ")");
 
-                // set the dimensions and margins of the graph
-                var margin = {top: 20, right: 30, bottom: 40, left: 90},
-                width = 460 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
+        // load the data
+        d3.json("songs.json", function(error, data) {
 
-                var svg2 = d3.select("#song-time-graph")
-                    .append("svg")
-                        .attr("width", width + margin.left + margin.right)
-                        .attr("height", height + margin.top + margin.bottom)
-                    .append("g")
-                        .attr("transform",
-                            "translate(" + margin.left + "," + margin.top + ")");
+            console.log(data);
+            // Add X axis
+            var x = d3.scaleLinear()
+                .domain([0, 150])
+                .range([0, width]);
+            svg2.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end")
+                .attr("class", "xAxis");
 
-                // load the data
-                d3.json("songs.json", function(data) {
+            // Y axis
+            var y = d3.scaleBand()
+                .range([0, height])
+                .domain(data.map(function(d) { return d.year; }))
+                .padding(.1);
+            svg2.append("g")
+                .call(d3.axisLeft(y))
+                .attr("class", "yAxis");
 
-                    // Add X axis
-                    var x = d3.scaleLinear()
-                        .domain([0, 150])
-                        .range([0, width]);
-                    svg2.append("g")
-                        .attr("transform", "translate(0," + height + ")")
-                        .call(d3.axisBottom(x))
-                        .selectAll("text")
-                        .attr("transform", "translate(-10,0)rotate(-45)")
-                        .style("text-anchor", "end")
-                        .attr("class", "xAxis");
+            //Bars
+            svg2.selectAll("myRect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", x(0))
+                .attr("y", function(d) { return y(d.year); })
+                .attr("width", function(d) { return x(d.value); })
+                .attr("height", y.bandwidth())
+                .attr("fill", "#69b3a2");
 
-                    // Y axis
-                    var y = d3.scaleBand()
-                        .range([0, height])
-                        .domain(data.map(function(d) { return d.year; }))
-                        .padding(.1);
-                    svg2.append("g")
-                        .call(d3.axisLeft(y))
-                        .attr("class", "yAxis");
+            // text label for the x axis
+            svg2.append("text")             
+                .attr("transform",
+                        "translate(" + (width/2) + " ," + 
+                                    (height + margin.top + 20) + ")")
+                .style("text-anchor", "middle")
+                .style("stroke", "white")
+                .text("value");
 
-                    //Bars
-                    svg2.selectAll("myRect")
-                        .data(data)
-                        .enter()
-                        .append("rect")
-                        .attr("x", x(0))
-                        .attr("y", function(d) { return y(d.year); })
-                        .attr("width", function(d) { return x(d.value); })
-                        .attr("height", y.bandwidth())
-                        .attr("fill", "#69b3a2");
+            // text label for the y axis
+            svg2.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .style("stroke", "white")
+                .text("year");
+        });
 
-                    // text label for the x axis
-                    svg2.append("text")             
-                        .attr("transform",
-                                "translate(" + (width/2) + " ," + 
-                                            (height + margin.top + 20) + ")")
-                        .style("text-anchor", "middle")
-                        .style("stroke", "white")
-                        .text("value");
+        //
+        // Render song popularity chart
+        //
 
-                    // text label for the y axis
-                    svg2.append("text")
-                        .attr("transform", "rotate(-90)")
-                        .attr("y", 0 - margin.left)
-                        .attr("x",0 - (height / 2))
-                        .attr("dy", "1em")
-                        .style("text-anchor", "middle")
-                        .style("stroke", "white")
-                        .text("year");
-                });
+        //var popObject = userProfileObj['songPopularity'];
 
-                //
-                // Render song popularity chart
-                //
+        var svg3 = d3.select("#song-pop-graph")
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform",
+                    "translate(" + margin.left + "," + margin.top + ")");
 
-                //var popObject = userProfileObj['songPopularity'];
+        // Load the data
+        d3.json("popularity.json", function(error, data){
 
-                var svg3 = d3.select("#song-pop-graph")
-                    .append("svg")
-                        .attr("width", width + margin.left + margin.right)
-                        .attr("height", height + margin.top + margin.bottom)
-                    .append("g")
-                        .attr("transform",
-                            "translate(" + margin.left + "," + margin.top + ")");
+            console.log(data);
+            // Add X axis
+            var x = d3.scaleLinear()
+                .range([0, width])
+                .domain([0, 99]);
+            svg3.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end")
+                .attr("class", "xAxis");
 
-                // Load the data
-                d3.json("popularity.json", function(error, data){
+            // Y axis
 
-                    // Add X axis
-                    var x = d3.scaleLinear()
-                        .range([0, width])
-                        .domain(Object.values(data.songPopValue));
-                    svg3.append("g")
-                        .attr("transform", "translate(0," + height + ")")
-                        .call(d3.axisBottom(x))
-                        .selectAll("text")
-                        .attr("transform", "translate(-10,0)rotate(-45)")
-                        .style("text-anchor", "end")
-                        .attr("class", "xAxis");
+            var y = d3.scaleBand()
+                .range([0, height])
+                .domain(data.map(function(d) { return d.trackCount; }))
+                .padding(.1);
+            svg3.append("g")
+                .call(d3.axisLeft(y))
+                .attr("class", "yAxis");
 
-                    // Y axis
+            //Bars
+            console.log(data.songPopularity);
+            svg3.selectAll("myRect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", x(0))
+                .attr("y", function(d) { return y(d.trackCount); })
+                .attr("width", function(d) { return x(d.songPopValue); })
+                .attr("height", y.bandwidth())
+                .attr("fill", "#69b3a2");
 
-                    var y = d3.scaleBand()
-                        .range([0, height])
-                        .domain(Object.keys(data.trackCount))
-                        .padding(.1);
-                    svg3.append("g")
-                        .call(d3.axisLeft(y))
-                        .attr("class", "yAxis");
+            // text label for the x axis
+            svg3.append("text")             
+                .attr("transform",
+                        "translate(" + (width/2) + " ," + 
+                                    (height + margin.top + 20) + ")")
+                .style("text-anchor", "middle")
+                .style("fill", "white")
+                .text("value");
 
-                    //Bars
-                    console.log(data.songPopularity);
-                    svg3.selectAll("myRect")
-                        .data(data.songPopularity)
-                        .enter()
-                        .append("rect")
-                        .attr("x", x(0))
-                        .attr("y", function(d) { return y(d); })
-                        .attr("width", function(d) { return x(d); })
-                        .attr("height", y.bandwidth())
-                        .attr("fill", "#69b3a2");
-
-                    // text label for the x axis
-                    svg3.append("text")             
-                        .attr("transform",
-                                "translate(" + (width/2) + " ," + 
-                                            (height + margin.top + 20) + ")")
-                        .style("text-anchor", "middle")
-                        .style("fill", "white")
-                        .text("value");
-
-                    // text label for the y axis
-                    svg3.append("text")
-                        .attr("transform", "rotate(-90)")
-                        .attr("y", 0 - margin.left)
-                        .attr("x",0 - (height / 2))
-                        .attr("dy", "1em")
-                        .style("text-anchor", "middle")
-                        .text("song popularity");
-                });
-            }
-        }
-       httpUserProfile.send();
+            // text label for the y axis
+            svg3.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("song popularity");
+        });
        var genres = ' {"children": [{"weight":281,"name":"pop"},{"weight":264,"name":"rap"},{"weight":255,"name":"pop rap"},{"weight":210,"name":"hip hop"},{"weight":176,"name":"trap music"},{"weight":155,"name":"southern hip hop"},{"weight":153,"name":"dance pop"},{"weight":89,"name":"gangster rap"},{"weight":88,"name":"edm"},{"weight":74,"name":"r&b"},{"weight":72,"name":"urban contemporary"},{"weight":67,"name":"tropical house"},{"weight":57,"name":"post-teen pop"},{"weight":56,"name":"electro pop"},{"weight":55,"name":"electro house"},{"weight":54,"name":"cali rap"},{"weight":49,"name":"atl hip hop"},{"weight":45,"name":"pop edm"},{"weight":43,"name":"underground hip hop"},{"weight":42,"name":"west coast trap"}]}'
 
     </script>
