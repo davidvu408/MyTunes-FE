@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-</head>
-<body>
 
+<head>
+    <title></title>
+</head>
+
+<body>
 </body>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,32 +44,41 @@
             </a>
         </div>
     </nav>
-    <!-- NAVBAR -->
-    <div id="user-info-container" class="container"></div>
-    <div id="genre-chart-container" class="container">
-        <div class="row">
-            <div class="col-lg">
-                <div id="genre-chart-column" class="col-lg" align="center">
+    <div id="main-container">
+        <div id="loader"></div>
+        <div id="sub-container">
+            <div id="user-info-container" class="container"></div>
+            <div id="genre-chart-container" class="container">
+                <div class="row">
+                    <div class="col-lg">
+                        <h1 class="display-4 text-white">Favorite Genres</h1>
+                        <div id="genre-chart-column" class="col-lg" align="center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="collage-container" class="container">
+                <div class="row no-gutters">
+                    <div class="col-sm">
+                        <h1 class="display-4 text-white">Favorite Albums</h1>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="collage-container" class="container">
-            <div class="row no-gutters">
-                <div class="col-sm">
-                    <h1 class="display-4 text-white">Favorite Albums</h1>
-                </div>
-            </div>
-        </div>
-        <!-- JQuery -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <!-- Bootstrap JS -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
-        <!-- D3.js -->
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script type="text/javascript" src="./js/user-profile.js"></script>
+    </div>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- Custom Script -->
+    <script type="text/javascript" src="./js/user-profile.js"></script>
+    <script type="text/javascript" src="./test-json/user-profile.json"></script>
 </body>
+
 </html>
