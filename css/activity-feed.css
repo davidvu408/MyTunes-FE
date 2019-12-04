@@ -1,6 +1,6 @@
 body {
     background: #303030 !important;
-    background-image: url('../images/background_feed.jpg') !important;
+    background-image: url('/images/background_feed.jpg') !important;
     background-attachment: fixed !important;
 }
 
