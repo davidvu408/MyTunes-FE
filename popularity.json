@@ -1,11 +1,11 @@
-{"popularity": [
-        {"songPopValue": 0, "trackCount": 0},
-        {"songPopValue": 1, "trackCount": 0},
-        {"songPopValue": 2, "trackCount": 0},
-        {"songPopValue": 3, "trackCount": 0},
-        {"songPopValue": 4, "trackCount": 0},
-        {"songPopValue": 5, "trackCount": 0},
-        {"songPopValue": 6, "trackCount": 1},
-        {"songPopValue": 7, "trackCount": 0},
-        {"songPopValue": 8, "trackCount": 1}
-]}
+[
+        {"songPopValue": "0", "trackCount": "0"},
+        {"songPopValue": "1", "trackCount": "0"},
+        {"songPopValue": "2", "trackCount": "0"},
+        {"songPopValue": "3", "trackCount": "0"},
+        {"songPopValue": "4", "trackCount": "0"},
+        {"songPopValue": "5", "trackCount": "0"},
+        {"songPopValue": "6", "trackCount": "1"},
+        {"songPopValue": "7", "trackCount": "0"},
+        {"songPopValue": "8", "trackCount": "1"}
+]
