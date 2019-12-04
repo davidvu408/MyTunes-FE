@@ -39,14 +39,16 @@ if(currPageNum == null) {
     currPageNum = 0;
 }
 const httpDiscoveryFeed = new XMLHttpRequest();
-const discoveryFeedUrl = 'https://my-tunes-be.herokuapp.com//discoveryFeed?pageIndex=' + currPageNum + '&refreshToken=' + refresh_token;
+const discoveryFeedUrl = 'https://my-tunes-be.herokuapp.com/discoveryFeed'
 httpDiscoveryFeed.open("GET", discoveryFeedUrl);
 httpDiscoveryFeed.onreadystatechange = function() {
     if (httpDiscoveryFeed.readyState == 4 && httpDiscoveryFeed.status == 200) {
         var discoveryFeedObj = JSON.parse(httpDiscoveryFeed.response);
+        console.log(typeof discoveryFeedObj);
+        console.log(discoveryFeedObj);
         // Create div row elements for each post
-        for (i = 0; i < discoveryFeedObj.length; i++) {
-            var currUser = discoveryFeedObj[i];
+        for (i = 0; i < Object.keys(discoveryFeedObj).length; i++) {
+            var currUser = discoveryFeedObj[i]['userProfileEntity'];
             var rowDiv = document.createElement('div');
             rowDiv.className = "postDiv row h-100 transparent";
             // Create columns in each row div to separate different elements of each post
@@ -88,7 +90,7 @@ httpDiscoveryFeed.onreadystatechange = function() {
                             var albumImg = document.createElement('img');
                             colDiv.className = " col-8";
                             albumImg.className = "img-fluid";
-                            albumImg.src = postsObj.posts[i].recent_albums.albumlist[k].album_art;
+                            albumImg.src = discoveryFeedObj[i]['topAlbums'][k]['albumCoverImgURL'];
                             albumCol.appendChild(albumImg);
                             albumDiv.appendChild(albumCol);
                         }
