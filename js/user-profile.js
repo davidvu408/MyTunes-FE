@@ -133,7 +133,6 @@ function renderFavoriteAlbums(userProfileObj) {
             }
             rowDiv.appendChild(colDiv);
         }
-<<<<<<< HEAD
         // Render bubble chart, uses v4 of d3
         var diameter = 800;
         var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -326,10 +325,8 @@ function renderFavoriteAlbums(userProfileObj) {
                 .style("text-anchor", "middle")
                 .text("song popularity");
         });
-=======
         // Append the row div onto collageContainer div
         document.getElementById('collage-container').appendChild(rowDiv);
->>>>>>> 102bcc469cd37f35b1c1b2f6a62f0f30aea3ca3c
     }
 }
 const refresh_token = localStorage.getItem('refreshToken');
