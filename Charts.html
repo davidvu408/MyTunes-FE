@@ -68,7 +68,7 @@
         <div id="song-pop-graph" class="container"></div>
       </div>
     <script>
-        var refresh_token = 'AQA8lNx9p8PYti66oAMFCOZQQCtBl7hODanA_x6VkyEEsVGDMB8i6RH4pQAy8ggK0xhIR5W_uQ4_rdpTFt08bzfccN_bylVF9r2sHBZT1st-Q01aHfn6JjfSwlHbeeHNsQ5Ylg'
+        const refresh_token = localStorage.getItem('refreshToken');
        
         // Make GET request for userProfileModel which contains top album information, top genres, song popularity, and song time range preferences.
         const httpUserProfile = new XMLHttpRequest();
@@ -227,7 +227,7 @@
                     // Add X axis
                     var x = d3.scaleLinear()
                         .range([0, width])
-                        .domain(Object.values(data.songPopularity));
+                        .domain(Object.values(data.songPopValue));
                     svg3.append("g")
                         .attr("transform", "translate(0," + height + ")")
                         .call(d3.axisBottom(x))
@@ -240,7 +240,7 @@
 
                     var y = d3.scaleBand()
                         .range([0, height])
-                        .domain(Object.keys(data.songPopularity))
+                        .domain(Object.keys(data.trackCount))
                         .padding(.1);
                     svg3.append("g")
                         .call(d3.axisLeft(y))
