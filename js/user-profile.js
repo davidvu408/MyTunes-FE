@@ -105,7 +105,7 @@ function renderPopularityPreference(userProfileObj) {
                 (height + margin.top + 20) + ")")
           .style("text-anchor", "middle")
           .style("stroke", "white")
-          .text("Recent Play Count");
+          .text("Track Count");
      // text label for the y axis
      svg3.append("text")
           .attr("transform", "rotate(-90)")
@@ -174,7 +174,7 @@ function renderTimeEraPreference(userProfileObj) {
                 (height + margin.top + 20) + ")")
           .style("text-anchor", "middle")
           .style("stroke", "white")
-          .text("Preference Score");
+          .text("Track Count");
      // text label for the y axis
      svg2.append("text")
           .attr("transform", "rotate(-90)")
